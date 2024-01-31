@@ -1,0 +1,25 @@
+#!/usr/bin/expect
+
+set timeout 300
+set USERNAME [lindex $argv 0]
+set PASSWORD [lindex $argv 1]
+set BACKUP_NAME [lindex $argv 2]
+
+spawn ./tmp/idriveforlinux.bin --install
+expect "Are you using Proxy (y/n)?" {send "n\r"}
+expect "Enter your choice:" {send "1\r"}
+expect "Enter your IDrive username:" {send "$USERNAME\r"}
+expect "Enter your IDrive password:" {send "$PASSWORD\r"}
+expect {
+"1) Create new Backup Location\r
+2) Select from existing Backup Locations\r
+Enter your choice:" {
+    send "1\r"
+    expect "Enter your Backup Location"
+    send "$BACKUP_NAME\r"
+    }
+
+"Do you want to change (y/n)?\r
+Enter your choice" {send "n\r"}
+}
+expect eof

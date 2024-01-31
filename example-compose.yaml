@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  idrive:
+    image: engineerrandyn/idrive
+    environment:
+      - USERNAME=username
+      - PASSWORD=password
+      - BACKUP_NAME=backup_name
+    restart: unless-stopped
+    volumes:
+      - /root/docker/IDriveForLinux:/opt/IDriveForLinux
+      - /home:/backup
